@@ -6,6 +6,7 @@ class Crap {
 
 	public function __construct( $init_parameter ) {
 		$this->fail = $init_parameter;
+
 		if ( in_array( 'js', $this->fail ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_js' ) );
 		}
@@ -17,7 +18,7 @@ class Crap {
 
 		if ( in_array( 'php', $this->fail ) ) {
 			if ( ! is_admin() || in_array( 'backend', $this->fail ) ) {
-				wp_die( 'Website is broken' );
+						die();
 			}
 		}
 
@@ -33,11 +34,12 @@ class Crap {
 
 	// missing argument in first function
 	public function crappy_content() {
-			$content .= 'Ups, something went wrong!';
+			$content  = '';
+			$content .= __( 'Ups, something went wrong!', 'crappy' );
 			return $content;
 	}
 	public function good_content( $content ) {
-			$content .= '<p style="color: green;font-weight:bold;">Follow me on <a href="https://twitter.com/pixolin">Twitter</a></p>';
+			$content .= '<p style="color: green;font-weight:bold;">' . __( 'Follow me on <a href="https://twitter.com/pixolin">Twitter</a>', 'crappy' ) . '</p>';
 			return $content;
 	}
 

@@ -3,7 +3,7 @@
  * Plugin Name:     Crappy
  * Plugin URI:      https://github.com/pixolin/crappy
  * Description:     Adds error to test debugging. USE AT OWN RISC. DON'T USE ON PRODUCTIVE SITES!
- * Author:          Bego Mario Garde <pixolin@pixolin.de
+ * Author:          Bego Mario Garde <pixolin@pixolin.de>
  * Author URI:      https://pixolin.de
  * Text Domain:     crappy
  * Domain Path:     /languages
@@ -34,16 +34,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 define( 'PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-define( 'WP_DEBUG', false );
+
+add_action( 'plugins_loaded', 'crappy_load_textdomain' );
+function crappy_load_textdomain() {
+	load_plugin_textdomain( 'crappy', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
+
 require_once PLUGIN_DIR . 'inc/class-crap.php';
 
 // Choose your issues
 $fail = [
-	//'js',           // broken JavaScript
-	//'wpcontent',    // broken Content Filter
-	//'php',          // breaks front end
-	// 'backend',       // breaks backend, too
-	// 'memory',
+	'js',           // broken JavaScript
+	'wpcontent',    // broken Content Filter
+	'php',          // breaks front end
+	//'backend',       // breaks backend, too
 ];
 
 $plugin = new Crap( $fail );
